@@ -20,7 +20,7 @@ public class PetController {
     private PetService service;
 
     @GetMapping
-    public ResponseEntity<List<PetDTO>> buscarTodos(){
+    public ResponseEntity<List<PetDTO>> buscarTodos() {
         List<PetDTO> pets = service.listarTodos();
         return ResponseEntity.ok(pets);
     }
@@ -28,8 +28,9 @@ public class PetController {
     @PostMapping
     @Transactional
     public ResponseEntity<String> cadastrar(@RequestPart @Valid CadastroPetDTO dados,
-                                            @RequestParam MultipartFile imagem){
+                                            @RequestParam MultipartFile imagem) {
         service.cadastrar(dados, imagem);
         return ResponseEntity.ok().build();
     }
+
 }

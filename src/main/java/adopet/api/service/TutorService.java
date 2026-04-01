@@ -15,10 +15,12 @@ public class TutorService {
     @Autowired
     private TutorRepository repository;
 
-    public List<TutorDTO> listarTodos(){
+    public List<TutorDTO> listarTodos() {
         return repository.findAll().stream().map(TutorDTO::new).toList();
     }
-    public void cadastrar(CadastroTutorDTO dados){
+
+    public void cadastrar(CadastroTutorDTO dados) {
         repository.save(new Tutor(dados));
     }
+
 }

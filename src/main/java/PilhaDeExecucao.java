@@ -1,4 +1,5 @@
 public class PilhaDeExecucao {
+
     public static void metodo1() {
         System.out.println("[Inicio] - metodo1");
 
@@ -34,6 +35,7 @@ public class PilhaDeExecucao {
 
         System.out.println("[Fim] - main");
     }
+
 }
 
 class Usuario {

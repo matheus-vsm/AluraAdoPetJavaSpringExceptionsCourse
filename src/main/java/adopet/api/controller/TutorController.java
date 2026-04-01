@@ -1,6 +1,5 @@
 package adopet.api.controller;
 
-
 import adopet.api.dto.CadastroTutorDTO;
 import adopet.api.dto.TutorDTO;
 import adopet.api.service.TutorService;
@@ -20,17 +19,16 @@ public class TutorController {
     private TutorService service;
 
     @GetMapping
-    public ResponseEntity<List<TutorDTO>> buscarTodos(){
+    public ResponseEntity<List<TutorDTO>> buscarTodos() {
         List<TutorDTO> tutores = service.listarTodos();
         return ResponseEntity.ok(tutores);
     }
 
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody @Valid CadastroTutorDTO dados){
+    public void cadastrar(@RequestBody @Valid CadastroTutorDTO dados) {
 
         this.service.cadastrar(dados);
     }
-
 
 }

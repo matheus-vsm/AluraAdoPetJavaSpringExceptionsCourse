@@ -31,7 +31,7 @@ public class Tutor {
     @OneToMany(mappedBy = "tutor")
     private List<Adocao> adocoes = new ArrayList<>();
 
-    public Tutor(CadastroTutorDTO dados){
+    public Tutor(CadastroTutorDTO dados) {
         this.nome = dados.nome();
         this.email = dados.email();
     }

@@ -31,21 +31,20 @@ public class Adocao {
 
     private String justificativa;
 
-    public Adocao(Tutor tutor, Pet pet, String motivo){
+    public Adocao(Tutor tutor, Pet pet, String motivo) {
         this.tutor = tutor;
         this.pet = pet;
         this.motivo = motivo;
         this.status = StatusAdocao.AGUARDANDO_AVALIACAO;
     }
 
-    public void marcarComoAprovada(){
-
+    public void marcarComoAprovada() {
         this.status = StatusAdocao.APROVADO;
     }
 
-    public void marcarComoReprovada(String justificativa)
-    {
+    public void marcarComoReprovada(String justificativa) {
         this.status = StatusAdocao.REPROVADO;
         this.justificativa = justificativa;
     }
+
 }
