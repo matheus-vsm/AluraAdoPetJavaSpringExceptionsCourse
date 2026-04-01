@@ -43,19 +43,19 @@ public class AdocaoService {
 
         // Pet já adotado
         if (pet.getAdotado()) {
-
+            throw new IllegalStateException("Pet já adotado!");
         }
 
         // Pet com solicitação de adoção em andamento
-        Boolean petAdocaoEmAndamento = adocaoRepository.existsPetIdAndStatus(dto.idPet(), StatusAdocao.AGUARDANDO_AVALIACAO);
+        Boolean petAdocaoEmAndamento = adocaoRepository.existsByPetIdAndStatus(dto.idPet(), StatusAdocao.AGUARDANDO_AVALIACAO);
         if (petAdocaoEmAndamento) {
-
+            throw new UnsupportedOperationException("Pet já possui uma solicitação de adoção em andamento!");
         }
 
         // Tutor com duas adoções aprovadas
-        Integer tutorAdocoes = adocaoRepository.countByTutorIdAndStatus((dto.idTutor(), StatusAdocao.APROVADO);
-        if (tutorAdocoes > 2) {
-
+        Integer tutorAdocoes = adocaoRepository.countByTutorIdAndStatus(dto.idTutor(), StatusAdocao.APROVADO);
+        if (tutorAdocoes >= 2) {
+            throw new IllegalStateException("Tutor já possui duas adoções aprovadas!");
         }
 
         adocaoRepository.save(new Adocao(tutor, pet, dto.motivo()));
