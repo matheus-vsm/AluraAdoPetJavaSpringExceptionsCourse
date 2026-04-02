@@ -4,6 +4,7 @@ import adopet.api.dto.AdocaoDTO;
 import adopet.api.dto.AprovarAdocaoDTO;
 import adopet.api.dto.ReprovarAdocaoDTO;
 import adopet.api.dto.SolicitacaoDeAdocaoDTO;
+import adopet.api.exception.AdocaoException;
 import adopet.api.model.Adocao;
 import adopet.api.model.Pet;
 import adopet.api.model.StatusAdocao;
@@ -37,25 +38,25 @@ public class AdocaoService {
         return adocaoRepository.findById(id).stream().findFirst().map(AdocaoDTO::new).orElse(null);
     }
 
-    public void solicitar(SolicitacaoDeAdocaoDTO dto) {
+    public void solicitar(SolicitacaoDeAdocaoDTO dto) throws AdocaoException {
         Pet pet = petRepository.getReferenceById(dto.idPet());
         Tutor tutor = tutorRepository.getReferenceById(dto.idTutor());
 
         // Pet já adotado
         if (pet.getAdotado()) {
-            throw new IllegalStateException("Pet já adotado!");
+            throw new AdocaoException("Pet já adotado!");
         }
 
         // Pet com solicitação de adoção em andamento
         Boolean petAdocaoEmAndamento = adocaoRepository.existsByPetIdAndStatus(dto.idPet(), StatusAdocao.AGUARDANDO_AVALIACAO);
         if (petAdocaoEmAndamento) {
-            throw new UnsupportedOperationException("Pet já possui uma solicitação de adoção em andamento!");
+            throw new AdocaoException("Pet já possui uma solicitação de adoção em andamento!");
         }
 
         // Tutor com duas adoções aprovadas
         Integer tutorAdocoes = adocaoRepository.countByTutorIdAndStatus(dto.idTutor(), StatusAdocao.APROVADO);
         if (tutorAdocoes >= 2) {
-            throw new IllegalStateException("Tutor já possui duas adoções aprovadas!");
+            throw new AdocaoException("Tutor já possui duas adoções aprovadas!");
         }
 
         adocaoRepository.save(new Adocao(tutor, pet, dto.motivo()));
